@@ -1,6 +1,3 @@
-
-[![Build Status](https://travis-ci.org/NERSC/slurm-magic.svg?branch=master)](https://travis-ci.org/NERSC/slurm-magic)
-
 SLURM-MAGIC
 ===========
 
@@ -20,23 +17,53 @@ Installation
 
 `slurm-magic` can be installed from this repository via `pip`:
 ```bash
-pip install git+https://github.com/NERSC/slurm-magic.git
+pip install git+https://github.com/MiZuii/slurm-magic.git
 ```
 `conda` users can include the following in an `environment.yml` file:
 ```yaml
   - pip:
-    - git+https://github.com/NERSC/slurm-magic.git
+    - git+https://github.com/MiZuii/slurm-magic.git
 ```
+
+Seting Up Jupyter Server
+------------------------
+
+1. Connect to a slurm server
+```bash
+ssh <your-user>@<server-address>
+```
+
+2. Run interactive job to host jupyter server instance
+```bash
+srun --nodes=1 --ntasks=1 --time=<session-time> --partition=<appropriate-partition> --account=<your-account> --pty /bin/bash
+```
+
+3. Create venv
+You might need to load python module depending on you server. You can check whether you have one by running ```python3 --version```.
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install ipykernel jupyter notebook
+```
+
+4. Install this package and dependencies.
+```bash
+pip install git+https://github.com/MiZuii/slurm-magic.git
+pip install pandas
+```
+
+5. Run the jupyter server
+The network configuration might be different depending on you slurm setup.
+```bash
+jupyter notebook --no-browser --port=<jupyter port to use> --ip=<name of the node the job is running on>
+```
+
+6. Connect to login node with editor and than to the server. Now the jupyter server is functional and running. To access it you should connect with development environment to the login node. Than copy the link outputed in jupyter server console and pate it in the development environment. You can also try to create ssh tunnel to the server and use you jupyter on the desired port localy.
 
 SLURM Magic Commands
 --------------------
 
-First, things to do:
-
-* Strategy (or no implementation) for interactive Slurm commands.
-* The "mode" thing needs to be renamed.
-* Logical approach to srun (auto-wrap in salloc?).
-* Implement and document how to get help.
+The implemented commands and their descriptions are listed below.
 
 ### %sacct
 
@@ -154,3 +181,10 @@ What Our Users Say
 
     I'll never have to leave a notebook again
     that's like the ultimate dream
+
+### TODO
+
+* Strategy (or no implementation) for interactive Slurm commands.
+* The "mode" thing needs to be renamed.
+* Logical approach to srun (auto-wrap in salloc?).
+* Implement and document how to get help.
