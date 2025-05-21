@@ -19,7 +19,7 @@ def modal(func):
         result = func(obj, line)
         if obj._display == "pandas":
             return pandas.read_table(io.StringIO(result), sep='\s+',
-                    error_bad_lines=False)
+                    on_bad_lines='skip')
         else:
             return result
     wrapped_func.__doc__ = func.__doc__
