@@ -33,12 +33,7 @@ Seting Up Jupyter Server
 ssh <your-user>@<server-address>
 ```
 
-2. Run interactive job to host jupyter server instance
-```bash
-srun --nodes=1 --ntasks=1 --time=<session-time> --partition=<appropriate-partition> --account=<your-account> --pty /bin/bash
-```
-
-3. Create venv
+2. Create venv
 You might need to load python module depending on you server. You can check whether you have one by running ```python3 --version```.
 ```bash
 python3 -m venv venv
@@ -46,19 +41,24 @@ source venv/bin/activate
 pip install ipykernel jupyter notebook
 ```
 
-4. Install this package and dependencies.
+3. Install this package and dependencies.
 ```bash
 pip install git+https://github.com/MiZuii/slurm-magic.git
 pip install pandas
 ```
 
-5. Run the jupyter server
+4. Run the jupyter server
 The network configuration might be different depending on you slurm setup.
 ```bash
-jupyter notebook --no-browser --port=<jupyter port to use> --ip=<name of the node the job is running on>
+jupyter notebook --no-browser --port=<jupyter port to use>
 ```
 
-6. Connect to login node with editor and than to the server. Now the jupyter server is functional and running. To access it you should connect with development environment to the login node. Than copy the link outputed in jupyter server console and pate it in the development environment. You can also try to create ssh tunnel to the server and use you jupyter on the desired port localy.
+5. Connect to login node with editor and than to the server. Now the jupyter server is functional and running. To access it you should connect with development environment to the login node. Than copy the link outputed in jupyter server console and pate it in the development environment. You can also try to create ssh tunnel to the server and use you jupyter on the desired port localy.
+
+Examples
+--------
+
+To learn how to use the package try running the notebook located in ```examples/```. Remember to adjust it's contents to your slurm server (partition and account).
 
 SLURM Magic Commands
 --------------------
